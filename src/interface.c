@@ -42,7 +42,7 @@
 #include <gtksourceview/gtksourcebuffer.h>
 #include <gtksourceview/gtksourceview.h>
 #include <gtksourceview/gtksourcelanguage.h>
-#include <gtksourceview/gtksourcelanguagesmanager.h>
+#include <gtksourceview/gtksourcelanguagemanager.h>
 
 #endif
 
@@ -316,11 +316,11 @@ dialog (gint32              image_ID,
   scroll        = gtk_scrolled_window_new (NULL, NULL);
 #ifdef USE_GTKSOURCEVIEW
   {
-    GtkSourceLanguagesManager *lm;
-    GtkSourceLanguage         *lang;
-    
-    lm = gtk_source_languages_manager_new ();
-    lang = gtk_source_languages_manager_get_language_from_mime_type (lm, "text/x-lua");
+    GtkSourceLanguageManager *lm;
+    GtkSourceLanguage        *lang;
+
+    lm = gtk_source_language_manager_new ();
+    lang = gtk_source_language_manager_get_language (lm, "lua");
 
     script_view   = gtk_source_view_new ();
     script_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (script_view));
@@ -328,12 +328,12 @@ dialog (gint32              image_ID,
     if (lang)
       {
         gtk_source_buffer_set_language (GTK_SOURCE_BUFFER (script_buffer), lang);
-        gtk_source_buffer_set_highlight (GTK_SOURCE_BUFFER (script_buffer), TRUE);
+        gtk_source_buffer_set_highlight_syntax (GTK_SOURCE_BUFFER (script_buffer), TRUE);
       }
 
     gtk_source_view_set_show_line_numbers (GTK_SOURCE_VIEW (script_view), TRUE);
     gtk_source_view_set_auto_indent       (GTK_SOURCE_VIEW (script_view), TRUE);
-    gtk_source_view_set_tabs_width        (GTK_SOURCE_VIEW (script_view), 4);
+    gtk_source_view_set_tab_width        (GTK_SOURCE_VIEW (script_view), 4);
   }
 #else
   script_view   = gtk_text_view_new ();
