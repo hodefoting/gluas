@@ -20,9 +20,7 @@ AM_CPPFLAGS = \
 	-DLOCALEDIR=\""$(LOCALEDIR)"\"	\
 	-DDATADIR=\""$(DATADIR)"\"	\
 	$(LUA_CFLAGS)			\
-	$(GTKSOURCEVIEW_CFLAGS)
-
-INCLUDES =\
+	$(GTKSOURCEVIEW_CFLAGS) \
 	-I$(top_srcdir)		\
 	@GIMP_CFLAGS@		\
 	-I$(includedir)

@@ -8,7 +8,7 @@ m4_define([plugin_name], [gluas])
 dnl These three define the plug-in version number
 m4_define([plugin_major_version], [0])
 m4_define([plugin_minor_version], [1])
-m4_define([plugin_micro_version], [20])
+m4_define([plugin_micro_version], [21])
 
 m4_define([plugin_version],
           [plugin_major_version.plugin_minor_version.plugin_micro_version])
@@ -79,12 +79,18 @@ AC_SUBST(LUA_REQUIRED_VERSION)
 # Check for Lua
 ###############
 
-PKG_CHECK_MODULES(LUA, lua >= $LUA_REQUIRED_VERSION,
+have_lua="no"
+PKG_CHECK_MODULES(LUA, lua >= lua_required_version,
   have_lua="yes",
-  [PKG_CHECK_MODULES(LUA, lua5.1 >= $LUA_REQUIRED_VERSION,
+  [PKG_CHECK_MODULES(LUA, lua5.1 >= lua_required_version,
      have_lua="yes",
-     have_lua="no  (usable lua not found)")])
-AM_CONDITIONAL(HAVE_LUA, test "x$have_lua" = "xyes")
+     [PKG_CHECK_MODULES(LUA, lua5.2 >= lua_required_version,
+       have_lua="yes",
+       [PKG_CHECK_MODULES(LUA, lua5.3 >= lua_required_version,
+         have_lua="yes",
+         [PKG_CHECK_MODULES(LUA, luajit >= 2.0.4,
+          have_lua="yes",
+          have_lua="no  (usable lua not found)")])])])])
 
 AC_SUBST(LUA_CFLAGS)
 AC_SUBST(LUA_LIBS)
@@ -92,11 +98,11 @@ AC_SUBST(LUA_LIBS)
 
 
 AC_ARG_ENABLE(gtksourceview,
-  [  --disable-gtksourceview don't use gtksourceview for syntax highlighting (default=auto)],
+  [  --disable-gtksourceview dont use gtksourceview for syntax highlighting (default=auto)],
   [use_gtksourceview=$enableval], [use_gtksourceview=yes])
 
 if test "x$use_gtksourceview" = "xyes"; then
-    PKG_CHECK_MODULES(GTKSOURCEVIEW, gtksourceview-1.0 >= 1.1.0,
+    PKG_CHECK_MODULES(GTKSOURCEVIEW, gtksourceview-2.0 >= 2.0.0,
         [use_gtksourceview=yes],
         [use_gtksourceview="no (code will not be syntax highlighted, see http:///gtksourceview.sourceforge.net)"]
     )
