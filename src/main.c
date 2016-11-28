@@ -1,6 +1,6 @@
 /* gluas entry point
  *
- * Copyright (C) 2004 Øyvind Kolås <pippin@users.sf.net>
+ * Copyright (C) 2004 Ã˜vind KolÃ¥s <pippin@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
