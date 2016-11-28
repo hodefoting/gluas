@@ -1,0 +1,77 @@
+gluas
+========
+
+Copyright (C) 2004 Øyvind Kolås <pippin@gimp.org>
+
+This package provides the ability to experiment with prototypes and
+ideas for image processing. One of it's primary purposes is a teaching
+tool students will use to reimplement, and experiment with, simple
+image processing operations.
+
+The best documentation for the package is the examples catalog, all
+of lua, documented at http://www.lua.org/ is avaiable, as well as the
+following image manipulation functions:
+
+set_hsl   (x, y, h, s, l)
+set_hsv   (x, y, h, s, v)
+set_lab   (x, y, l, a, b)
+set_rgb   (x, y, r, g, b)
+set_rgba  (x, y, r, g, b, a)
+set_value (x, y, value)
+set_alpha (x, y, alpha)
+
+
+(lua allows multiple return, I use that to illustrate the return value
+ of the pixel data querying functions)
+
+h,s,l   = get_hsl   (x, y)
+h,s,v   = get_hsv   (x, y)
+l,a,b   = get_lab   (x, y)
+r,g,b   = get_rgb   (x, y)
+r,g,b,a = get_rgba  (x, y)
+value   = get_value (x, y)
+alpha   = get_alpha (x, y)
+
+
+
+
+flush ()
+
+apply the current processing (which means that pixels retrieved with
+get_ functions, will get the data set with set_ functions and not
+original data, useful for multipass implementations, 
+
+
+the global variables width and height are set to the pixel dimensions
+of the drawable being modified.
+
+progress (amount)
+
+Calling the function progress(val) with a number between 0.0 and 1.0 will
+give the user feedback about how much of the image is processed.
+
+
+Animation
+=========
+
+An extra feature of gluas is animation, by pressing shift+ctrl+A you can control some
+additional options. The number of frames generated, and the time value to use when doing a 
+preview.
+
+From within the code the time value can be accessed through the global variable 'time'
+which varies from 0.0 at the start of the animation to 1.0 at the end of the animation.
+
+To make the animation "ping-pong" insert code similar to
+
+if time>0.5 then
+        time=0.5-(time-0.5)
+        time=time*2
+else
+        time=time*2
+end
+
+at the top of your script.
+
+
+Happy image processing
+/pippin

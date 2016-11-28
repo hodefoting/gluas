@@ -1,0 +1,51 @@
+This is your plugin's TODO list.
+
+
+.----------------------------------.
+|load | save | test                |
+|----------------------------------|
+|for x=0, width-1                  |
+|  for y=0, height -1              |
+|    r,g,b = get_rgb (x,y)         |
+|                                  |
+|    set_rgb (x,y, r,g,b)          |
+|  end                             |
+|end                               |
+|                                  |
+|                                  |
+|                                  |
+|                                  |
+|                                  |
+|                                  |
+|----------------------------------|
+| Help |             | Cancel | OK |
+`----------------------------------'
+
+
+r,g,b
+get_rgb   (x,y)
+
+r,g,b,a
+get_rgba  (x,y,r,g,b,a)
+
+v
+get_value (x,y)
+
+l,a,b
+get_lab (x,y)
+
+alpha
+get_alpha (x,y)
+
+set_rgb (x,y,r,g,b)
+set_rgba (x,y,r,g,b,a)
+set_lab (x,y,l,a,b)
+set_value (x,y,value)
+set_alpha (x,y,alpha)
+
+progress (ratio_done)
+
+
+
+
+
