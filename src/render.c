@@ -62,7 +62,7 @@ static int l_progress  (lua_State * lua);
 static int l_flush     (lua_State * lua);
 static int l_print     (lua_State * lua);
 
-static const luaL_reg gluas_functions[] =
+static const luaL_Reg gluas_functions[] =
 {
     {"set_rgba",    l_set_rgba},
     {"get_rgba",    l_get_rgba},
@@ -88,10 +88,14 @@ static const luaL_reg gluas_functions[] =
 
 static void
 register_functions (lua_State      *L,
-                    const luaL_reg *l)
+                    const luaL_Reg *l)
 {
-  for (;l->name; l++)
-    lua_register (L, l->name, l->func);
+	lua_getglobal (L, "_G");
+#if (LUA_VERSION_NUM < 502)
+	luaL_register (L, NULL, l);
+#else
+	luaL_setfuncs (L, l, 0);
+#endif
 }
 
 void
@@ -147,13 +151,9 @@ drawable_lua_process (GimpDrawable *drawable,
     /*  set the tile cache size  */
     gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-    L = lua_open ();
-    /*lua_baselibopen (L);
-    lua_iolibopen (L);
-    lua_strlibopen (L);
-    lua_mathlibopen (L);
-    lua_tablibopen (L);*/
-    
+    L = luaL_newstate ();
+    luaL_openlibs (L);
+
     register_functions (L, gluas_functions);
 
     p.L = L;
